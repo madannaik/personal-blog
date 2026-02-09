@@ -141,13 +141,7 @@ export default async function PostPage({
               home
             </Link>
             {" > "}
-            <Link
-              href="/archive"
-              className="text-primary underline hover:text-foreground"
-            >
-              archive
-            </Link>
-            {" > "}
+
             <span className="text-foreground">{post.title}</span>
           </nav>
 
