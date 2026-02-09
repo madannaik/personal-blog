@@ -1,24 +1,105 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { PortableText, PortableTextComponents } from "@portabletext/react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { BlogSidebar } from "@/components/blog-sidebar";
-import { getPostBySlug, blogPosts } from "@/lib/blog-data";
-import { type SanityDocument } from "next-sanity";
-
 import { client } from "@/lib/sanity";
+import { BlogPost } from "@/types";
+
+const portableTextComponents: PortableTextComponents = {
+  block: {
+    h1: ({ children }) => (
+      <h1 className="text-2xl font-bold mt-8 mb-3 border-b border-border pb-1">
+        {children}
+      </h1>
+    ),
+    h2: ({ children }) => (
+      <h2 className="text-xl font-bold mt-6 mb-3 border-b border-border pb-1">
+        {children}
+      </h2>
+    ),
+    h3: ({ children }) => (
+      <h3 className="text-lg font-bold mt-6 mb-3 border-b border-border pb-1">
+        {children}
+      </h3>
+    ),
+    h4: ({ children }) => (
+      <h4 className="text-base font-bold mt-4 mb-2">{children}</h4>
+    ),
+    h5: ({ children }) => (
+      <h5 className="text-sm font-bold mt-4 mb-2">{children}</h5>
+    ),
+    h6: ({ children }) => (
+      <h6 className="text-sm font-bold mt-4 mb-2">{children}</h6>
+    ),
+    blockquote: ({ children }) => (
+      <blockquote className="border-l-[3px] border-border pl-4 my-5 italic text-muted-foreground">
+        {children}
+      </blockquote>
+    ),
+    normal: ({ children }) => (
+      <p className="mb-5 leading-relaxed">{children}</p>
+    ),
+  },
+  marks: {
+    strong: ({ children }) => <strong className="font-bold">{children}</strong>,
+    em: ({ children }) => <em className="italic">{children}</em>,
+    code: ({ children }) => (
+      <code className="font-mono text-[0.9em] bg-secondary border border-border px-1.5 py-0.5">
+        {children}
+      </code>
+    ),
+    underline: ({ children }) => <span className="underline">{children}</span>,
+    "strike-through": ({ children }) => <s>{children}</s>,
+    link: ({ children, value }) => (
+      <a
+        href={value?.href}
+        className="text-primary underline hover:text-foreground"
+      >
+        {children}
+      </a>
+    ),
+  },
+  types: {
+    code: ({ value }: { value: { code: string; language?: string } }) => (
+      <pre className="font-mono text-[0.85em] bg-secondary border border-border p-4 overflow-x-auto mb-5">
+        <code>{value.code}</code>
+      </pre>
+    ),
+  },
+  list: {
+    bullet: ({ children }) => (
+      <ul className="list-disc pl-6 mb-5">{children}</ul>
+    ),
+    number: ({ children }) => (
+      <ol className="list-decimal pl-6 mb-5">{children}</ol>
+    ),
+  },
+  listItem: {
+    bullet: ({ children }) => <li className="mb-1.5">{children}</li>,
+    number: ({ children }) => <li className="mb-1.5">{children}</li>,
+  },
+};
+
+const POSTS_QUERY = `*[_type == "blogPost"] | order(date desc) { _id, title, slug, date, author, summary, tags, content }`;
 
 export async function generateStaticParams() {
-  const post = `
-    *[_type == "blogPost"]{ _id, title, slug, date, author, summary, tags, content }
-  `;
-  const posts = await client.fetch<SanityDocument[]>(post);
+  const posts = await client.fetch<BlogPost[]>(POSTS_QUERY);
   return posts.map((post) => ({ slug: post.slug.current }));
 }
 
-function estimateReadingTime(html: string): number {
-  const text = html.replace(/<[^>]*>/g, "");
-  const words = text.split(/\s+/).length;
+function estimateReadingTime(blocks: BlogPost["content"]): number {
+  const text = (blocks ?? [])
+    .filter((block) => block._type === "block")
+    .map(
+      (block) =>
+        block.children
+          ?.map((child: unknown) => (child as { text?: string }).text ?? "")
+          .join("") ?? "",
+    )
+    .join(" ");
+  const words = text.split(/\s+/).filter(Boolean).length;
   return Math.max(1, Math.ceil(words / 200));
 }
 
@@ -28,16 +109,18 @@ export default async function PostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const allPosts = await client.fetch<BlogPost[]>(POSTS_QUERY);
+  const post = allPosts.find((p) => p.slug.current === slug);
 
   if (!post) {
     notFound();
   }
-
-  const currentIndex = blogPosts.findIndex((p) => p.slug === post.slug);
+  const currentIndex = allPosts.findIndex(
+    (p) => p.slug.current === post.slug.current,
+  );
   const prevPost =
-    currentIndex < blogPosts.length - 1 ? blogPosts[currentIndex + 1] : null;
-  const nextPost = currentIndex > 0 ? blogPosts[currentIndex - 1] : null;
+    currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+  const nextPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
   const readingTime = estimateReadingTime(post.content);
 
   return (
@@ -123,10 +206,12 @@ export default async function PostPage({
 
           {/* Post Content */}
           <section className="border border-border p-5 sm:p-8 bg-card">
-            <div
-              className="prose-html"
-              dangerouslySetInnerHTML={{ __html: post.content }}
-            />
+            <div className="prose-html">
+              <PortableText
+                value={post.content}
+                components={portableTextComponents}
+              />
+            </div>
 
             {/* End mark */}
             <div className="text-center text-muted-foreground font-mono text-sm mt-8 pt-4 border-t border-border">
@@ -150,7 +235,7 @@ export default async function PostPage({
                       {"<< older"}
                     </span>
                     <Link
-                      href={`/post/${prevPost.slug}`}
+                      href={`/post/${prevPost.slug.current}`}
                       className="text-primary underline hover:text-foreground"
                     >
                       {prevPost.title}
@@ -169,7 +254,7 @@ export default async function PostPage({
                       {"newer >>"}
                     </span>
                     <Link
-                      href={`/post/${nextPost.slug}`}
+                      href={`/post/${nextPost.slug.current}`}
                       className="text-primary underline hover:text-foreground"
                     >
                       {nextPost.title}

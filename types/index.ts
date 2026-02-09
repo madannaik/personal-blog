@@ -1,3 +1,5 @@
+import { PortableTextBlock } from "@portabletext/react";
+
 export interface BlogPost {
   _id: string;
   title: string;
@@ -6,5 +8,5 @@ export interface BlogPost {
   author: string;
   summary: string;
   tags: string[];
-  content: string;
+  content: PortableTextBlock[];
 }
