@@ -1,0 +1,150 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 40 33% 98%;
+    --foreground: 30 10% 25%;
+    --card: 40 30% 96%;
+    --card-foreground: 30 10% 25%;
+    --popover: 40 33% 98%;
+    --popover-foreground: 30 10% 25%;
+    --primary: 220 55% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 40 25% 93%;
+    --secondary-foreground: 30 10% 25%;
+    --muted: 40 20% 92%;
+    --muted-foreground: 30 8% 55%;
+    --accent: 40 25% 93%;
+    --accent-foreground: 30 10% 25%;
+    --destructive: 0 60% 55%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 35 15% 85%;
+    --input: 35 15% 85%;
+    --ring: 220 55% 50%;
+    --chart-1: 12 60% 65%;
+    --chart-2: 173 40% 45%;
+    --chart-3: 197 30% 35%;
+    --chart-4: 43 55% 60%;
+    --chart-5: 27 65% 60%;
+    --radius: 0rem;
+    --sidebar-background: 40 30% 96%;
+    --sidebar-foreground: 30 10% 25%;
+    --sidebar-primary: 220 55% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 40 25% 93%;
+    --sidebar-accent-foreground: 30 10% 25%;
+    --sidebar-border: 35 15% 85%;
+    --sidebar-ring: 220 55% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* HTML-style prose for blog post content */
+.prose-html {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: hsl(var(--foreground));
+}
+
+.prose-html p {
+  margin-bottom: 1.25rem;
+}
+
+.prose-html h3 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid hsl(var(--border));
+  padding-bottom: 0.25rem;
+}
+
+.prose-html a {
+  color: hsl(var(--primary));
+  text-decoration: underline;
+}
+
+.prose-html a:hover {
+  color: hsl(var(--foreground));
+}
+
+.prose-html strong {
+  font-weight: 700;
+}
+
+.prose-html em {
+  font-style: italic;
+}
+
+.prose-html code {
+  font-family: var(--font-ibm-plex-mono), 'Courier New', Courier, monospace;
+  font-size: 0.9em;
+  background: hsl(var(--secondary));
+  border: 1px solid hsl(var(--border));
+  padding: 0.15em 0.35em;
+}
+
+.prose-html pre {
+  font-family: var(--font-ibm-plex-mono), 'Courier New', Courier, monospace;
+  font-size: 0.85em;
+  background: hsl(var(--secondary));
+  border: 1px solid hsl(var(--border));
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1.25rem;
+}
+
+.prose-html pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+.prose-html blockquote {
+  border-left: 3px solid hsl(var(--border));
+  padding-left: 1rem;
+  margin-left: 0;
+  margin-bottom: 1.25rem;
+  font-style: italic;
+  color: hsl(var(--muted-foreground));
+}
+
+.prose-html ul,
+.prose-html ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.prose-html ul {
+  list-style-type: disc;
+}
+
+.prose-html ol {
+  list-style-type: decimal;
+}
+
+.prose-html li {
+  margin-bottom: 0.35rem;
+}
+
+.prose-html hr {
+  border-top: 1px solid hsl(var(--border));
+  margin: 2rem 0;
+}
