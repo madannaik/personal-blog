@@ -23,41 +23,32 @@ export default function AboutPage() {
           <span className="text-foreground">about</span>
         </nav>
 
-        <h2 className="text-2xl sm:text-3xl font-bold border-b-2 border-border pb-2 mb-6">
-          About This Site
-        </h2>
+        <div className="border border-border p-4 sm:p-6 bg-card mb-6">
+          <h3 className="font-bold text-xl mb-3">About Me</h3>
+          <pre className="font-mono text-sm leading-relaxed text-foreground overflow-x-auto">
+            {`Name:     Madan Naik
+Location: Bangalore
+Since:    2026
+Likes:    Frontend and web, Rust(Think i hate it), C++(top 98% developer),
+          Anime, Buying unneccassary stuff, fitness, Minimalism.
+Work:     At AntStack as a Senior Dev.
+`}
+          </pre>
+        </div>
 
         <div className="border border-border p-4 sm:p-6 bg-card mb-6">
           <h3 className="font-bold text-xl mb-3">What is this?</h3>
           <p className="leading-relaxed mb-4">
             This is <strong>the blog</strong> &mdash; a blog about the web,
-            written with the aesthetic sensibility of the web circa 1997. I
-            believe in semantic markup, blue underlined links, and the radical
-            idea that content is more important than presentation.
+            written with the aesthetic sensibility. I believe in semantic
+            markup, blue underlined links, and the radical idea that content is
+            more important than presentation.
           </p>
           <p className="leading-relaxed mb-4">
-            Here we write about web history, HTML nostalgia, the craft of
+            Here I write about web history, HTML nostalgia, the craft of
             building for the browser, and the enduring beauty of simple
             documents linked together with hypertext.
           </p>
-          <p className="leading-relaxed">
-            Every post on this site could be read with CSS disabled and still
-            make perfect sense. We consider this a feature.
-          </p>
-        </div>
-
-        <div className="border border-border p-4 sm:p-6 bg-card mb-6">
-          <h3 className="font-bold text-xl mb-3">About the Webmaster</h3>
-          <pre className="font-mono text-sm leading-relaxed text-foreground overflow-x-auto">
-            {`Name:     webmaster
-Location: the internet
-Since:    a long time ago
-Status:   still online
-Likes:    semantic HTML, RSS feeds, 
-          personal websites, web rings
-Dislikes: pop-ups, autoplaying video,
-          cookie banners, dark patterns`}
-          </pre>
         </div>
 
         <div className="border border-border p-4 sm:p-6 bg-card mb-6">
@@ -91,7 +82,7 @@ Dislikes: pop-ups, autoplaying video,
               </Link>
               {" ............ home (all posts)"}
             </li>
-            <li>
+            {/* <li>
               <Link
                 href="/archive"
                 className="text-primary underline hover:text-foreground"
@@ -99,7 +90,7 @@ Dislikes: pop-ups, autoplaying video,
                 /archive
               </Link>
               {" ....... post archive with tag filtering"}
-            </li>
+            </li> */}
             <li>
               <Link
                 href="/about"
@@ -144,14 +135,14 @@ Dislikes: pop-ups, autoplaying video,
             </li>
             <li>
               <a
-                href="https://indieweb.org"
+                href="https://pointerpointer.com/"
                 className="text-primary underline hover:text-foreground"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                IndieWeb
+                Pointer Pointer
               </a>
-              {" — people-focused alternative to the corporate web"}
+              {" — Which has a point"}
             </li>
             <li>
               <a
