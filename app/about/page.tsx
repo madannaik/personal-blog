@@ -50,6 +50,68 @@ Work:     At AntStack as a Senior Dev.
             documents linked together with hypertext.
           </p>
         </div>
+        <div className="border border-border p-4 sm:p-6 bg-card mb-6">
+          <h3 className="font-bold text-xl mb-3">Connect</h3>
+          <p className="leading-relaxed mb-4">Find me on the web:</p>
+          <ul className="flex flex-col gap-2 pl-6 list-disc">
+            <li>
+              <a
+                href="https://github.com/madannaik"
+                className="text-primary underline hover:text-foreground"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                GitHub
+              </a>
+              {" — code and projects"}
+            </li>
+            <li>
+              <a
+                href="https://www.linkedin.com/in/madan-naik-388953177/"
+                className="text-primary underline hover:text-foreground"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                LinkedIn
+              </a>
+              {" — professional profile"}
+            </li>
+            {/* <li>
+              <a
+                href="https://substack.com"
+                className="text-primary underline hover:text-foreground"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Substack
+              </a>
+              {" — newsletter"}
+            </li> */}
+            {/* <li>
+              <a href="https://twitter.com" className="text-primary underline hover:text-foreground" target="_blank" rel="noopener noreferrer">
+                Twitter / X
+              </a>
+              {" — thoughts and updates"}
+            </li> */}
+            <li>
+              <a
+                href="https://music.youtube.com/playlist?list=PLdkd-QRchR8YNruqzV65fj-yG0ubWNzoK&si=kt6DIM32l_pYg5-h"
+                className="text-primary underline hover:text-foreground"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                YouTube
+              </a>
+              {" — video content and playlists"}
+            </li>
+            {/* <li>
+              <a href="/resume.pdf" className="text-primary underline hover:text-foreground" target="_blank" rel="noopener noreferrer">
+                Resume
+              </a>
+              {" — CV and experience"}
+            </li> */}
+          </ul>
+        </div>
 
         <div className="border border-border p-4 sm:p-6 bg-card mb-6">
           <h3 className="font-bold text-xl mb-3">Colophon</h3>

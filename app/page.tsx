@@ -13,7 +13,6 @@ export default async function HomePage() {
       *[_type == "blogPost"]{ _id, title, slug, date, author, summary, tags, content }
     `;
   const posts = await client.fetch<SanityDocument<BlogPost>[]>(post);
-  console.log(posts);
 
   return (
     <div
